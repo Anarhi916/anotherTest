@@ -1,0 +1,171 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:f="sap.f"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+	xmlns:layout="sap.ui.layout" height="100%" controllerName="andrey.filimonov.controller.StoreDetails">
+	<f:DynamicPage showFooter="true" class="sapUiNoContentPadding">
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="{i18n>LinkStoresDeteils}" />
+				</f:heading>
+				<f:breadcrumbs>
+					<Breadcrumbs>
+						<Link text="{i18n>LinkStoresList}" press="goToStoreOverview"/>
+						<Link text="{i18n>LinkStoresDeteils}"/>
+					</Breadcrumbs>
+				</f:breadcrumbs>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:header>
+			<f:DynamicPageHeader >
+				<layout:HorizontalLayout allowWrapping="true">
+					<layout:VerticalLayout class="sapUiMediumMarginEnd">
+						<layout:HorizontalLayout >
+							<Label text="{i18n>AtributsEmail}:" design="Bold" class="sapUiSmallMarginEnd"/>
+							<Text text="{odata>Email}"/>
+						</layout:HorizontalLayout>
+						<layout:HorizontalLayout >
+							<Label text="{i18n>AtributsPhoneNumber}:" design="Bold" class="sapUiSmallMarginEnd"/>
+							<Text text="{odata>PhoneNumber}"/>
+						</layout:HorizontalLayout>
+						<layout:HorizontalLayout >
+							<Label text="{i18n>AtributsAddress}:" design="Bold" class="sapUiSmallMarginEnd"/>
+							<Text text="{odata>Address}"/>
+						</layout:HorizontalLayout>
+					</layout:VerticalLayout>
+
+					<layout:VerticalLayout>
+						<layout:HorizontalLayout >
+							<Label text="{i18n>AtributsEstablishedDate}:" design="Bold" class="sapUiSmallMarginEnd"/>
+							<Text text="{
+								path: 'odata>Established',
+								type: 'sap.ui.model.type.Date'}"/>
+						</layout:HorizontalLayout>
+						<layout:HorizontalLayout >
+							<Label text="{i18n>AtributsFloorArea}:" design="Bold" class="sapUiSmallMarginEnd"/>
+							<Text text="{odata>FloorArea}"/>
+						</layout:HorizontalLayout>
+					</layout:VerticalLayout>
+				</layout:HorizontalLayout>
+			</f:DynamicPageHeader>
+		</f:header>
+		<f:content >
+			<IconTabBar id="idIconTabBar" select="onFilterSelect">
+				<items>
+					<IconTabFilter showAll="true" count="{StoresDeteils>/ALL}" text="{i18n>FilterAll}" key="ALL" />
+					<IconTabSeparator />
+					<IconTabFilter icon="sap-icon://complete" iconColor="Positive" count="{StoresDeteils>/OK}" text="{i18n>FilterOK}" key="OK" />
+					<IconTabFilter icon="sap-icon://message-warning" iconColor="Critical" count="{StoresDeteils>/STORAGE}" text="{i18n>FilterStorage}" key="STORAGE" />
+					<IconTabFilter icon="sap-icon://message-error" iconColor="Negative" count="{StoresDeteils>/OUT_OF_STOCK}" text="{i18n>FilterOutOfStock}" key="OUT_OF_STOCK" />
+				</items>
+				<content>
+					<Table id="idTableGoods" selectionChange="goToProductDeteils" mode="SingleSelectMaster" items="{odata>rel_Products}" sticky="ColumnHeaders">
+						<headerToolbar>
+							<OverflowToolbar>
+								<content>
+									<Title text="{i18n>AtributsProducts}"/>
+									<ToolbarSpacer />
+									<SearchField width="30%" placeholder="{i18n>PlaceholderSearch}" search="onProductsSearch"/>
+								</content>
+							</OverflowToolbar>
+						</headerToolbar>
+						<columns>
+							<Column width="17rem">
+								<HBox alignItems="Center">
+									<Text text="{i18n>AtributsName}"/>
+									<Button type="Transparent" press="onSortButtonPress" app:sortName="Name" icon="sap-icon://{
+								path: 'StoresDeteils>/sortIcon',
+								formatter: '.sortTypeFormatter'}" />
+								</HBox>
+							</Column>
+							<Column width="5rem">
+								<HBox alignItems="Center">
+									<Text text="{i18n>AtributsPrice}"/>
+									<Button type="Transparent" press="onSortButtonPress" app:sortName="Price" icon="sap-icon://{
+								path: 'StoresDeteils>/sortIcon',
+								formatter: '.sortTypeFormatter'}" />
+								</HBox>
+							</Column>
+							<Column>
+								<HBox alignItems="Center">
+									<Text text="{i18n>AtributsSpecs}"/>
+									<Button type="Transparent" press="onSortButtonPress" app:sortName="Specs" icon="sap-icon://{
+								path: 'StoresDeteils>/sortIcon',
+								formatter: '.sortTypeFormatter'}" />
+								</HBox>
+							</Column>
+							<Column>
+								<HBox alignItems="Center">
+									<Text text="{i18n>AtributsSupplierinfo}"/>
+									<Button type="Transparent" press="onSortButtonPress" app:sortName="SupplierInfo" icon="sap-icon://{
+								path: 'StoresDeteils>/sortIcon',
+								formatter: '.sortTypeFormatter'}" />
+								</HBox>
+							</Column>
+							<Column>
+								<HBox alignItems="Center">
+									<Text text="{i18n>AtributsOrigin}"/>
+									<Button type="Transparent" press="onSortButtonPress" app:sortName="MadeIn" icon="sap-icon://{
+								path: 'StoresDeteils>/sortIcon',
+								formatter: '.sortTypeFormatter'}" />
+								</HBox>
+							</Column>
+							<Column>
+								<HBox alignItems="Center">
+									<Text text="{i18n>AtributsProdCompanyu}"/>
+									<Button type="Transparent" press="onSortButtonPress" app:sortName="ProductionCompanyName" icon="sap-icon://{
+								path: 'StoresDeteils>/sortIcon',
+								formatter: '.sortTypeFormatter'}" />
+								</HBox>
+							</Column>
+							<Column>
+								<HBox alignItems="Center">
+									<Text text="{i18n>AtributsRating}"/>
+									<Button type="Transparent" press="onSortButtonPress" app:sortName="Rating" icon="sap-icon://{
+								path: 'StoresDeteils>/sortIcon',
+								formatter: '.sortTypeFormatter'}" />
+								</HBox>
+							</Column>
+							<Column width="3rem"/>
+							<Column width="3rem"/>
+							<Column width="3rem"/>
+						</columns>
+						<items>
+							<ColumnListItem vAlign="Middle">
+								<cells >
+									<ObjectIdentifier title="{odata>Name}"/>
+									<ObjectNumber number="{odata>Price}" unit="USD"/>
+									<Text maxLines="1" text="{odata>Specs}" />
+									<Text text="{odata>SupplierInfo}" maxLines="1"/>
+									<Text text="{odata>MadeIn}" maxLines="1"/>
+									<Text text="{odata>ProductionCompanyName}" maxLines="1"/>
+									<RatingIndicator value="{odata>Rating}" />
+									<Button type="Transparent" icon="sap-icon://edit" press="onOpenDialogEditProduct" />
+									<Button type="Transparent" press="onDeleteProduct" icon="sap-icon://decline" />
+									<Text text=">"/>
+								</cells>
+							</ColumnListItem>
+
+						</items>
+					</Table>
+				</content>
+			</IconTabBar>
+		</f:content>
+		<f:footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+				<Button icon="sap-icon://add" type="Ghost" text="{i18n>ButtonCreate}" press="onOpenDialogCreateProduct"/>
+				<Button icon="sap-icon://delete" type="Reject" text="{i18n>ButtonDelete}" press="onDeleteStore"/>
+			</OverflowToolbar>
+		</f:footer>
+	</f:DynamicPage>
+</mvc:View>
+
+
+
+
+
+
+
+

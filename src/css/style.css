@@ -1,0 +1,8 @@
+html[dir="ltr"] .myAppDemoWT .myCustomMarginCenter {
+  margin: 0 auto;
+}
+
+html[dir="ltr"] .myAppDemoWT .myCustomBoldText {
+  font-size: 20px;
+  font-weight: 600;
+}
