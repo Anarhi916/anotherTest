@@ -7,7 +7,14 @@ sap.ui.define(
     "sap/m/MessageBox",
     "sap/m/MessageToast",
   ],
-  function (BaseController, Filter, FilterOperator) {
+  function (
+    BaseController,
+    JSONModel,
+    Filter,
+    FilterOperator,
+    MessageBox,
+    MessageToast
+  ) {
     "use strict";
     var sStoreID;
     var sProductID;
@@ -17,6 +24,27 @@ sap.ui.define(
         this.myGetRouter()
           .getRoute("ProductDetailsRoute")
           .attachPatternMatched(this.onPatternMatched, this);
+
+        // var oProductDeteilsModel = new JSONModel({
+        //   ProductID: "",
+        //   inputsValue: {
+        //     Author: "",
+        //     Rating: "",
+        //     Message: "",
+        //   },
+        // });
+        // var oProductDeteilsModel = new JSONModel({
+        //   inputsValue: {
+        //     Author: "",
+        //     Rating: "",
+        //     Message: "",
+        //     Posted: "",
+        //     ProductId: "",
+        //   },
+        // });
+        // this.oProductDeteilsModel = oProductDeteilsModel;
+
+        // this.getView().setModel(oProductDeteilsModel, "ProductDeteils");
       },
 
       onPatternMatched: function (oEvent) {

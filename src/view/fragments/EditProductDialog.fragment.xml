@@ -1,0 +1,88 @@
+<core:FragmentDefinition xmlns="sap.m"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core"
+	xmlns:l="sap.ui.layout">
+	<Dialog id="idDialogCreateProsuct" title="{i18n>TitleDialogEditProduct}">
+		<f:SimpleForm maxContainerCols="1" layout="ResponsiveGridLayout" labelSpanL="12" labelSpanM="12" emptySpanL="0" emptySpanM="0" columnsL="1" columnsM="1">
+			<f:content>
+				<Label text="{i18n>AtributsName}"/>
+				<Input placeholder="{i18n>PlaceholderEnterName}" valueLiveUpdate="true" value="{
+					path: 'odata>Name',
+					type: 'sap.ui.model.type.String',
+					constraints: {
+						minLength: 3
+					}
+				}"/>
+
+				<Label text="{i18n>AtributsPrice}"/>
+				<Input placeholder="{i18n>PlaceholderEnterPrice}" valueLiveUpdate="true" description="USD" fieldWidth="85%" value="{
+					path: 'odata>Price',
+					type: 'sap.ui.model.type.Integer',
+					constraints: {
+						minLength: 1
+					}
+				}"/>
+
+				<Label text="{i18n>AtributsSpecs}"/>
+				<Input placeholder="{i18n>PlaceholderEnterSpecs}" valueLiveUpdate="true" value="{
+					path: 'odata>Specs',
+					type: 'sap.ui.model.type.String',
+					constraints: {
+						minLength: 5
+					}
+				}"/>
+
+				<Label text="{i18n>AtributsRating}"/>
+				<Input placeholder="{i18n>PlaceholderEnterRating}" valueLiveUpdate="true" value="{
+					path: 'odata>Rating',
+					type: 'sap.ui.model.type.Integer',
+					constraints: {
+						minLength: 1,
+						minimum: 1,
+						maximum: 5
+					}
+				}"/>
+
+				<Label text="{i18n>AtributsSupplierinfo}"/>
+				<Input placeholder="{i18n>PlaceholderEnterSupplierinfo}" valueLiveUpdate="true" value="{
+					path: 'odata>SupplierInfo',
+					type: 'sap.ui.model.type.String',
+					constraints: {
+						minLength: 5
+					}
+				}"/>
+
+				<Label text="{i18n>AtributsOrigin}"/>
+				<Input placeholder="{i18n>PlaceholderEnterOrigin}" valueLiveUpdate="true" value="{
+					path: 'odata>MadeIn',
+					type: 'sap.ui.model.type.String',
+					constraints: {
+						minLength: 2
+					}
+				}"/>
+
+				<Label text="{i18n>AtributsProdCompanyu}"/>
+				<Input placeholder="{i18n>PlaceholderEnterProdCompany}" valueLiveUpdate="true" value="{
+					path: 'odata>ProductionCompanyName',
+					type: 'sap.ui.model.type.String',
+					constraints: {
+						minLength: 5
+					}
+				}"/>
+
+				<Label text="{i18n>AtributsStatus}"/>
+				<Select width="100%" id="idSelectStatusEditable" selectedKey="{odata>Status}">
+					<core:Item key="OK" text="{i18n>FilterOK}" />
+					<core:Item key="STORAGE" text="{i18n>FilterStorage}" />
+					<core:Item key="OUT_OF_STOCK" text="{i18n>FilterOutOfStock}" />
+				</Select>
+
+			</f:content>
+		</f:SimpleForm>
+
+		<buttons>
+			<Button text="{i18n>ButtonEdit}" type="Emphasized" press="onEditProductPress" />
+			<Button text="{i18n>ButtonCancel}" press="onCancelFromEditPress" />
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>
