@@ -34,6 +34,7 @@ sap.ui.define(
           sortType: "SORT_NONE",
           lastSorted: "",
           sortIcon: "sort",
+          edit: false,
           titleDialog: "",
         });
         this.oStoresDeteilsModel = oStoresDeteilsModel;
@@ -208,7 +209,11 @@ sap.ui.define(
       },
 
       onDeleteStore: function () {
-        MessageBox.confirm("Do you want to delete current store?", {
+        var sMessageConfirm = this.getView()
+          .getModel("i18n")
+          .getResourceBundle()
+          .getText("ConfirmDeleteStore");
+        MessageBox.confirm(sMessageConfirm, {
           initialFocus: sap.m.MessageBox.Action.CANCEL,
           onClose: function (sButton) {
             if (sButton === MessageBox.Action.OK) {
@@ -218,11 +223,19 @@ sap.ui.define(
 
               oODataModel.remove(sKey, {
                 success: function () {
-                  MessageToast.show("Store was successfully removed!");
+                  var sMessage = this.getView()
+                    .getModel("i18n")
+                    .getResourceBundle()
+                    .getText("MessageSuccessfulDeleteStore");
+                  MessageToast.show(sMessage);
                   this.goToStoreOverview();
                 }.bind(this),
                 error: function () {
-                  MessageBox.error("Error while removing store!");
+                  var sMessage = this.getView()
+                    .getModel("i18n")
+                    .getResourceBundle()
+                    .getText("MessageErrorDeletingStore");
+                  MessageBox.error(sMessage);
                 },
               });
             }
@@ -231,45 +244,19 @@ sap.ui.define(
       },
 
       onOpenDialogCreateProduct: function () {
-        var oPromiseDialogCreateProduct;
-        if (!this.oDialogCreateProduct) {
-          oPromiseDialogCreateProduct = this.loadFragment({
-            name: "andrey.filimonov.view.fragments.CreateProductDialog",
-          }).then(
-            function (oDialogCreateProduct) {
-              this.oDialogCreateProduct = oDialogCreateProduct;
-            }.bind(this)
-          );
-        } else {
-          oPromiseDialogCreateProduct = Promise.resolve();
-        }
-        oPromiseDialogCreateProduct.then(
-          function () {
-            var oODataModel = this.getView().getModel("odata");
-            var oEntryCtx = oODataModel.createEntry("/Products", {
-              properties: {
-                StoreId: sStoreID,
-              },
-            });
-            this.oDialogCreateProduct.setBindingContext(oEntryCtx);
-            this.oDialogCreateProduct.setModel(oODataModel);
-            this.oDialogCreateProduct.open();
-          }.bind(this)
-        );
-      },
-
-      onOpenDialogEditProduct: function (oEvent) {
-        var oSelectedListItem = oEvent.getSource();
-        var oCtx = oSelectedListItem.getBindingContext("odata");
-        var oProductID = oCtx.getObject("id");
-        var sKey = `/Products(${oProductID})`;
+        this.oStoresDeteilsModel.setProperty("/edit", false);
+        var sTatle = this.getView()
+          .getModel("i18n")
+          .getResourceBundle()
+          .getText("TitleDialogCreateProduct");
+        this.oStoresDeteilsModel.setProperty("/titleDialog", sTatle);
         var oPromiseDialog;
-        if (!this.oDialogEditProduct) {
+        if (!this.oDialog) {
           oPromiseDialog = this.loadFragment({
-            name: "andrey.filimonov.view.fragments.EditProductDialog",
+            name: "andrey.filimonov.view.fragments.CreateOrEditProductDialog",
           }).then(
-            function (oDialogEditProduct) {
-              this.oDialogEditProduct = oDialogEditProduct;
+            function (oDialog) {
+              this.oDialog = oDialog;
             }.bind(this)
           );
         } else {
@@ -277,11 +264,49 @@ sap.ui.define(
         }
         oPromiseDialog.then(
           function () {
-            this.oDialogEditProduct.bindElement({
+            var oODataModel = this.getView().getModel("odata");
+            var oEntryCtx = oODataModel.createEntry("/Products", {
+              properties: {
+                StoreId: sStoreID,
+              },
+            });
+            this.oDialog.setBindingContext(oEntryCtx);
+            this.oDialog.setModel(oODataModel);
+            this.oDialog.open();
+          }.bind(this)
+        );
+      },
+
+      onOpenDialogEditProduct: function (oEvent) {
+        this.oStoresDeteilsModel.setProperty("/edit", true);
+        var sTatle = this.getView()
+          .getModel("i18n")
+          .getResourceBundle()
+          .getText("TitleDialogEditProduct");
+        this.oStoresDeteilsModel.setProperty("/titleDialog", sTatle);
+        var oSelectedListItem = oEvent.getSource();
+        var oCtx = oSelectedListItem.getBindingContext("odata");
+        var oProductID = oCtx.getObject("id");
+        var sKey = `/Products(${oProductID})`;
+        var oPromiseDialog;
+        if (!this.oDialog) {
+          oPromiseDialog = this.loadFragment({
+            name: "andrey.filimonov.view.fragments.CreateOrEditProductDialog",
+          }).then(
+            function (oDialog) {
+              this.oDialog = oDialog;
+            }.bind(this)
+          );
+        } else {
+          oPromiseDialog = Promise.resolve();
+        }
+        oPromiseDialog.then(
+          function () {
+            this.oDialog.bindElement({
               path: sKey,
               model: "odata",
             });
-            this.oDialogEditProduct.open();
+            this.oDialog.open();
           }.bind(this)
         );
       },
@@ -289,33 +314,55 @@ sap.ui.define(
       onCancelPress: function () {
         this.oMessageManager.removeAllMessages();
         var oODataModel = this.getView().getModel("odata");
-        var oCtx = this.oDialogCreateProduct.getBindingContext();
+        var oCtx = this.oDialog.getBindingContext();
         oODataModel.deleteCreatedEntry(oCtx);
-        this.oDialogCreateProduct.close();
+        this.oDialog.close();
       },
 
       onCancelFromEditPress: function () {
         this.oMessageManager.removeAllMessages();
-        this.oDialogEditProduct.close();
+        this.oDialog.close();
         var oODataModel = this.getView().getModel("odata");
         oODataModel.resetChanges();
       },
 
       onCreateProductPress: function () {
-        if (this.oMessageManager.getMessageModel().getProperty("/").length) {
-          MessageBox.error("Enter valid information!");
+        var sMessage;
+        if (
+          // this.oMessageManager.getMessageModel().getProperty("/").length ||
+          // this.isFilledForm()
+          this.oMessageManager.getMessageModel().getProperty("/").length
+        ) {
+          sMessage = this.getView()
+            .getModel("i18n")
+            .getResourceBundle()
+            .getText("MessageValidInfo");
+          MessageBox.error(sMessage);
         } else {
           var oODataModel = this.getView().getModel("odata");
           oODataModel.submitChanges();
           this.onCancelPress();
-          MessageToast.show("Store was successfully created!");
+          sMessage = this.getView()
+            .getModel("i18n")
+            .getResourceBundle()
+            .getText("MessageSuccessfulCreateProduct");
+          MessageToast.show(sMessage);
         }
       },
 
       onEditProductPress: function () {
-        var oODataModel = this.getView().getModel("odata");
-        oODataModel.submitChanges();
-        this.onCancelFromEditPress();
+        var sMessage;
+        if (this.oMessageManager.getMessageModel().getProperty("/").length) {
+          sMessage = this.getView()
+            .getModel("i18n")
+            .getResourceBundle()
+            .getText("MessageValidInfo");
+          MessageBox.error(sMessage);
+        } else {
+          var oODataModel = this.getView().getModel("odata");
+          oODataModel.submitChanges();
+          this.onCancelFromEditPress();
+        }
       },
 
       onDeleteProduct: function (oEvent) {
@@ -323,23 +370,48 @@ sap.ui.define(
         var oCtx = oSelectedListItem.getBindingContext("odata");
         var oProductID = oCtx.getObject("id");
         var sKey = `/Products(${oProductID})`;
-        MessageBox.confirm("Do you want to delete current product?", {
+        var sMessage = this.getView()
+          .getModel("i18n")
+          .getResourceBundle()
+          .getText("ConfirmDeleteProduct");
+        MessageBox.confirm(sMessage, {
           initialFocus: sap.m.MessageBox.Action.CANCEL,
           onClose: function (sButton) {
             if (sButton === MessageBox.Action.OK) {
               var oODataModel = this.getView().getModel("odata");
               oODataModel.remove(sKey, {
                 success: function () {
-                  MessageToast.show("Product was successfully removed!");
+                  var sMessage = this.getView()
+                    .getModel("i18n")
+                    .getResourceBundle()
+                    .getText("MessageSuccessfulDeleteProduct");
+                  MessageToast.show(sMessage);
                 }.bind(this),
                 error: function () {
-                  MessageBox.error("Error while removing product!");
+                  var sMessage = this.getView()
+                    .getModel("i18n")
+                    .getResourceBundle()
+                    .getText("MessageErrorDeletingProduct");
+                  MessageBox.error(sMessage);
                 },
               });
             }
           }.bind(this),
         });
       },
+
+      // isFilledForm: function () {
+      //   var oSimpleForm = this.getView().byId("idFormCreateOrEditProduct");
+      //   var content = oSimpleForm.getContent();
+      //   for (var i in content) {
+      //     var control = content[i];
+      //     if (control.getValue && control.getVisible() === true) {
+      //       if (control.getValue() === "") {
+      //         return true;
+      //       }
+      //     }
+      //   }
+      // },
     });
   }
 );

@@ -82,15 +82,42 @@ sap.ui.define(
       },
 
       onCreateStorePress: function () {
-        if (this.oMessageManager.getMessageModel().getProperty("/").length) {
-          MessageBox.error("Enter valid information!");
+        var sMessage;
+
+        if (
+          // this.oMessageManager.getMessageModel().getProperty("/").length ||
+          // this.isFilledForm()
+          this.oMessageManager.getMessageModel().getProperty("/").length
+        ) {
+          sMessage = this.getView()
+            .getModel("i18n")
+            .getResourceBundle()
+            .getText("MessageValidInfo");
+          MessageBox.error(sMessage);
         } else {
+          sMessage = this.getView()
+            .getModel("i18n")
+            .getResourceBundle()
+            .getText("MessageSuccessfulCreateStore");
           var oODataModel = this.getView().getModel("odata");
           oODataModel.submitChanges();
           this.onCancelPress();
-          MessageToast.show("Store was successfully created!");
+          MessageToast.show(sMessage);
         }
       },
+
+      // isFilledForm: function () {
+      //   var oSimpleForm = this.getView().byId("idDialogCreateStore");
+      //   var content = oSimpleForm.getContent();
+      //   for (var i in content) {
+      //     var control = content[i];
+      //     if (control.getValue) {
+      //       if (control.getValue() === "") {
+      //         return true;
+      //       }
+      //     }
+      //   }
+      // },
     });
   }
 );
