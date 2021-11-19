@@ -1,11 +1,8 @@
 sap.ui.define(
   [
     "andrey/filimonov/controller/BaseController.controller",
-    "sap/ui/model/json/JSONModel",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
-    "sap/m/MessageBox",
-    "sap/m/MessageToast",
   ],
   function (BaseController, Filter, FilterOperator) {
     "use strict";

@@ -329,9 +329,8 @@ sap.ui.define(
       onCreateProductPress: function () {
         var sMessage;
         if (
-          // this.oMessageManager.getMessageModel().getProperty("/").length ||
-          // this.isFilledForm()
-          this.oMessageManager.getMessageModel().getProperty("/").length
+          this.oMessageManager.getMessageModel().getProperty("/").length ||
+          this.isFilledForm()
         ) {
           sMessage = this.getView()
             .getModel("i18n")
@@ -400,18 +399,18 @@ sap.ui.define(
         });
       },
 
-      // isFilledForm: function () {
-      //   var oSimpleForm = this.getView().byId("idFormCreateOrEditProduct");
-      //   var content = oSimpleForm.getContent();
-      //   for (var i in content) {
-      //     var control = content[i];
-      //     if (control.getValue && control.getVisible() === true) {
-      //       if (control.getValue() === "") {
-      //         return true;
-      //       }
-      //     }
-      //   }
-      // },
+      isFilledForm: function () {
+        var oSimpleForm = this.getView().byId("idFormCreateOrEditProduct");
+        var content = oSimpleForm.getContent();
+        for (var i in content) {
+          var control = content[i];
+          if (control.getValue && control.getVisible() === true) {
+            if (control.getValue() === "") {
+              return true;
+            }
+          }
+        }
+      },
     });
   }
 );
