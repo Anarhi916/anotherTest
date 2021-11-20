@@ -71,7 +71,7 @@
 							</OverflowToolbar>
 						</headerToolbar>
 						<columns>
-							<Column width="17rem">
+							<Column width="16rem">
 								<HBox alignItems="Center">
 									<Text text="{i18n>AtributsName}"/>
 									<Button type="Transparent" press="onSortButtonPress" app:sortName="Name" icon="sap-icon://{
@@ -79,7 +79,7 @@
 								formatter: '.sortTypeFormatter'}" />
 								</HBox>
 							</Column>
-							<Column width="5rem">
+							<Column width="5rem" minScreenWidth="965px" demandPopin="true">
 								<HBox alignItems="Center">
 									<Text text="{i18n>AtributsPrice}"/>
 									<Button type="Transparent" press="onSortButtonPress" app:sortName="Price" icon="sap-icon://{
@@ -87,7 +87,7 @@
 								formatter: '.sortTypeFormatter'}" />
 								</HBox>
 							</Column>
-							<Column>
+							<Column minScreenWidth="1240px">
 								<HBox alignItems="Center">
 									<Text text="{i18n>AtributsSpecs}"/>
 									<Button type="Transparent" press="onSortButtonPress" app:sortName="Specs" icon="sap-icon://{
@@ -95,7 +95,7 @@
 								formatter: '.sortTypeFormatter'}" />
 								</HBox>
 							</Column>
-							<Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
 								<HBox alignItems="Center">
 									<Text text="{i18n>AtributsSupplierinfo}"/>
 									<Button type="Transparent" press="onSortButtonPress" app:sortName="SupplierInfo" icon="sap-icon://{
@@ -103,7 +103,7 @@
 								formatter: '.sortTypeFormatter'}" />
 								</HBox>
 							</Column>
-							<Column>
+							<Column minScreenWidth="880px">
 								<HBox alignItems="Center">
 									<Text text="{i18n>AtributsOrigin}"/>
 									<Button type="Transparent" press="onSortButtonPress" app:sortName="MadeIn" icon="sap-icon://{
@@ -111,7 +111,7 @@
 								formatter: '.sortTypeFormatter'}" />
 								</HBox>
 							</Column>
-							<Column>
+							<Column minScreenWidth="732px" demandPopin="true">
 								<HBox alignItems="Center">
 									<Text text="{i18n>AtributsProdCompanyu}"/>
 									<Button type="Transparent" press="onSortButtonPress" app:sortName="ProductionCompanyName" icon="sap-icon://{
@@ -119,7 +119,7 @@
 								formatter: '.sortTypeFormatter'}" />
 								</HBox>
 							</Column>
-							<Column>
+							<Column minScreenWidth="1165px" demandPopin="true">
 								<HBox alignItems="Center">
 									<Text text="{i18n>AtributsRating}"/>
 									<Button type="Transparent" press="onSortButtonPress" app:sortName="Rating" icon="sap-icon://{

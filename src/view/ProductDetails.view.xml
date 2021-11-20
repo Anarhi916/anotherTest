@@ -42,21 +42,32 @@
 						</layout:HorizontalLayout>
 						<layout:HorizontalLayout >
 							<Label text="{i18n>AtributsStatus}:" design="Bold" class="sapUiSmallMarginEnd"/>
-							<ObjectStatus text="{odata>Status}" state="{
+							<ObjectStatus text="{
+								path: 'odata>Status',
+								formatter: '.statusTransleteble'
+							}" state="{
 								path: 'odata>Status',
 								formatter: '.statusIndicator'
 							}" inverted="true" active="true"/>
 						</layout:HorizontalLayout>
 					</layout:VerticalLayout>
 				</layout:HorizontalLayout>
-				<layout:HorizontalLayout >
+				<!-- <layout:HorizontalLayout allowWrapping="true">
 					<Label text="{i18n>AtributsSpecs}:" design="Bold" class="sapUiSmallMarginEnd"/>
-					<Text text="{odata>Specs}" class="sapUiMediumMarginEnd"/>
+					<Text text="{odata>Specs}" class="sapUiSmallMarginEnd" width="90%"/>
 				</layout:HorizontalLayout>
-				<layout:HorizontalLayout >
+				<layout:HorizontalLayout allowWrapping="true">
 					<Label text="{i18n>AtributsSupplierinfo}:" design="Bold" class="sapUiSmallMarginEnd"/>
-					<Text text="{odata>SupplierInfo}" class="sapUiMediumMarginEnd"/>
-				</layout:HorizontalLayout>
+					<Text text="{odata>SupplierInfo}" width="90%"/>
+				</layout:HorizontalLayout> -->
+				<layout:VerticalLayout >
+					<Label text="{i18n>AtributsSpecs}:" design="Bold" class="sapUiSmallMarginEnd"/>
+					<Text text="{odata>Specs}" />
+				</layout:VerticalLayout>
+				<layout:VerticalLayout >
+					<Label text="{i18n>AtributsSupplierinfo}:" design="Bold" class="sapUiSmallMarginEnd"/>
+					<Text text="{odata>SupplierInfo}" />
+				</layout:VerticalLayout>
 
 			</f:DynamicPageHeader>
 		</f:header>

@@ -3,8 +3,10 @@ sap.ui.define(
     "andrey/filimonov/controller/BaseController.controller",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
+    "sap/m/MessageBox",
+    "sap/m/MessageToast",
   ],
-  function (BaseController, Filter, FilterOperator) {
+  function (BaseController, Filter, FilterOperator, MessageBox, MessageToast) {
     "use strict";
     var sStoreID;
     var sProductID;
@@ -57,26 +59,59 @@ sap.ui.define(
         }
       },
 
+      statusTransleteble: function (sStatus) {
+        switch (sStatus) {
+          case "OK":
+            return this.getView()
+              .getModel("i18n")
+              .getResourceBundle()
+              .getText("FilterOK");
+          case "STORAGE":
+            return this.getView()
+              .getModel("i18n")
+              .getResourceBundle()
+              .getText("FilterStorage");
+          case "OUT_OF_STOCK":
+            return this.getView()
+              .getModel("i18n")
+              .getResourceBundle()
+              .getText("FilterOutOfStock");
+        }
+      },
+
       onPostComment: function () {
         var sDate = new Date();
         var oODataModel = this.getView().getModel("odata");
         var Author = this.getView().byId("idAuthor").getValue();
         var Rating = this.getView().byId("idRating").getValue();
         var Message = this.getView().byId("idMessage").getValue();
-        var oODataModel = this.getView().getModel("odata");
-        var oEntryCtx = oODataModel.createEntry("/ProductComments", {
-          properties: {
-            ProductId: sProductID,
-            Author: Author,
-            Rating: Rating,
-            Message: Message,
-            Posted: sDate,
-          },
-        });
-        oODataModel.submitChanges(oEntryCtx);
-        oODataModel.deleteCreatedEntry(oEntryCtx);
-        this.getView().byId("idAuthor").setValue("");
-        this.getView().byId("idRating").setValue("");
+        if (Author === "") {
+          let sMessage = this.getView()
+            .getModel("i18n")
+            .getResourceBundle()
+            .getText("MessageValidAuthor");
+          MessageBox.error(sMessage);
+        } else {
+          var oODataModel = this.getView().getModel("odata");
+          var oEntryCtx = oODataModel.createEntry("/ProductComments", {
+            properties: {
+              ProductId: sProductID,
+              Author: Author,
+              Rating: Rating,
+              Message: Message,
+              Posted: sDate,
+            },
+          });
+          oODataModel.submitChanges(oEntryCtx);
+          oODataModel.deleteCreatedEntry(oEntryCtx);
+          this.getView().byId("idAuthor").setValue("");
+          this.getView().byId("idRating").setValue("");
+          let sMessage = this.getView()
+            .getModel("i18n")
+            .getResourceBundle()
+            .getText("MessageSuccessfulCreateComment");
+          MessageToast.show(sMessage);
+        }
       },
     });
   }

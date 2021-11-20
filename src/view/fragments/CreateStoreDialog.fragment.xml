@@ -2,10 +2,10 @@
 	xmlns:f="sap.ui.layout.form"
 	xmlns:core="sap.ui.core">
 	<Dialog title="{i18n>TitleDialogCreateStore}">
-		<f:SimpleForm maxContainerCols="1" layout="ResponsiveGridLayout" labelSpanL="12" labelSpanM="12" emptySpanL="0" emptySpanM="0" columnsL="1" columnsM="1" id="idDialogCreateStore">
+		<f:SimpleForm maxContainerCols="1" layout="ResponsiveGridLayout" labelSpanL="12" labelSpanM="12" labelSpanS="12" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsL="1" columnsM="1" id="idDialogCreateStore">
 			<f:content>
 				<Label text="{i18n>AtributsName}" required="true"/>
-				<Input placeholder="{i18n>PlaceholderEnterName}" valueLiveUpdate="true" value="{
+				<Input placeholder="{i18n>PlaceholderEnterName}" value="{
 					path: 'Name',
 					type: 'sap.ui.model.type.String',
 					constraints: {
@@ -14,7 +14,7 @@
 				}" />
 
 				<Label text="{i18n>AtributsEmail}" required="true"/>
-				<Input placeholder="{i18n>PlaceholderEnterEmail}" valueLiveUpdate="true" value="{
+				<Input id="idInputEmail" placeholder="{i18n>PlaceholderEnterEmail}" value="{
 					path: 'Email',
 					type: 'sap.ui.model.type.String',
 					constraints: {
@@ -24,7 +24,7 @@
 				}"/>
 
 				<Label text="{i18n>AtributsPhoneNumber}" required="true"/>
-				<Input placeholder="{i18n>PlaceholderEnterPhone}" valueLiveUpdate="true" value="{
+				<Input placeholder="{i18n>PlaceholderEnterPhone}" value="{
 					path: 'PhoneNumber',
 					type: 'sap.ui.model.type.Integer',
 					constraints: {
@@ -33,11 +33,11 @@
 				}"/>
 
 				<Label text="{i18n>AtributsAddress}" required="true"/>
-				<Input placeholder="{i18n>PlaceholderEnterAddress}" valueLiveUpdate="true" value="{
+				<Input placeholder="{i18n>PlaceholderEnterAddress}" value="{
 					path: 'Address',
 					type: 'sap.ui.model.type.String',
 					constraints: {
-						minLength: 5
+						minLength: 3
 					}
 				}"/>
 
@@ -48,7 +48,7 @@
 				}" />
 
 				<Label text="{i18n>AtributsFloorArea}" required="true"/>
-				<Input placeholder="{i18n>PlaceholderEnterArea}" valueLiveUpdate="true" value="{
+				<Input placeholder="{i18n>PlaceholderEnterArea}" value="{
 					path: 'FloorArea',
 					type: 'sap.ui.model.type.Integer',
 					constraints: {

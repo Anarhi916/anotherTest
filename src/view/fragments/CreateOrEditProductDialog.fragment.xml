@@ -3,18 +3,18 @@
 	xmlns:core="sap.ui.core"
 	xmlns:l="sap.ui.layout">
 	<Dialog id="idDialogCreateProduct" title="{StoresDeteils>/titleDialog}">
-		<f:SimpleForm maxContainerCols="1" layout="ResponsiveGridLayout" labelSpanL="12" labelSpanM="12" emptySpanL="0" emptySpanM="0" columnsL="1" columnsM="1" id="idFormCreateOrEditProduct">
+		<f:SimpleForm maxContainerCols="1" layout="ResponsiveGridLayout" labelSpanL="12" labelSpanM="12" labelSpanS="12" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsL="1" columnsM="1" id="idFormCreateOrEditProduct">
 			<f:content>
 				<Label text="{i18n>AtributsName}" required="true"/>
 
-				<Input placeholder="{i18n>PlaceholderEnterName}" valueLiveUpdate="true" value="{
+				<Input placeholder="{i18n>PlaceholderEnterName}" value="{
 					path: 'Name',
 					type: 'sap.ui.model.type.String',
 					constraints: {
 						minLength: 3
 					}
 				}" visible="{= !${StoresDeteils>/edit} }"/>
-				<Input placeholder="{i18n>PlaceholderEnterName}" valueLiveUpdate="true" value="{
+				<Input placeholder="{i18n>PlaceholderEnterName}" value="{
 					path: 'odata>Name',
 					type: 'sap.ui.model.type.String',
 					constraints: {
@@ -24,14 +24,14 @@
 
 				<Label text="{i18n>AtributsPrice}" required="true"/>
 
-				<Input placeholder="{i18n>PlaceholderEnterPrice}" valueLiveUpdate="true" description="USD" fieldWidth="85%" value="{
+				<Input placeholder="{i18n>PlaceholderEnterPrice}" description="USD" fieldWidth="85%" value="{
 					path: 'Price',
 					type: 'sap.ui.model.type.Integer',
 					constraints: {
 						minLength: 1
 					}
 				}" visible="{= !${StoresDeteils>/edit} }"/>
-				<Input placeholder="{i18n>PlaceholderEnterPrice}" valueLiveUpdate="true" description="USD" fieldWidth="85%" value="{
+				<Input placeholder="{i18n>PlaceholderEnterPrice}" description="USD" fieldWidth="85%" value="{
 					path: 'odata>Price',
 					type: 'sap.ui.model.type.Integer',
 					constraints: {
@@ -41,14 +41,14 @@
 
 				<Label text="{i18n>AtributsSpecs}" required="true"/>
 
-				<Input placeholder="{i18n>PlaceholderEnterSpecs}" valueLiveUpdate="true" value="{
+				<Input placeholder="{i18n>PlaceholderEnterSpecs}" value="{
 					path: 'Specs',
 					type: 'sap.ui.model.type.String',
 					constraints: {
 						minLength: 5
 					}
 				}" visible="{= !${StoresDeteils>/edit} }"/>
-				<Input placeholder="{i18n>PlaceholderEnterSpecs}" valueLiveUpdate="true" value="{
+				<Input placeholder="{i18n>PlaceholderEnterSpecs}" value="{
 					path: 'odata>Specs',
 					type: 'sap.ui.model.type.String',
 					constraints: {
@@ -58,7 +58,7 @@
 
 				<Label text="{i18n>AtributsRating}" required="true"/>
 
-				<Input placeholder="{i18n>PlaceholderEnterRating}" valueLiveUpdate="true" value="{
+				<Input placeholder="{i18n>PlaceholderEnterRating}" value="{
 					path: 'Rating',
 					type: 'sap.ui.model.type.Integer',
 					constraints: {
@@ -67,7 +67,7 @@
 						maximum: 5
 					}
 				}" visible="{= !${StoresDeteils>/edit} }"/>
-				<Input placeholder="{i18n>PlaceholderEnterRating}" valueLiveUpdate="true" value="{
+				<Input placeholder="{i18n>PlaceholderEnterRating}" value="{
 					path: 'odata>Rating',
 					type: 'sap.ui.model.type.Integer',
 					constraints: {
@@ -79,14 +79,14 @@
 
 				<Label text="{i18n>AtributsSupplierinfo}" required="true"/>
 
-				<Input placeholder="{i18n>PlaceholderEnterSupplierinfo}" valueLiveUpdate="true" value="{
+				<Input placeholder="{i18n>PlaceholderEnterSupplierinfo}" value="{
 					path: 'SupplierInfo',
 					type: 'sap.ui.model.type.String',
 					constraints: {
 						minLength: 5
 					}
 				}" visible="{= !${StoresDeteils>/edit} }"/>
-				<Input placeholder="{i18n>PlaceholderEnterSupplierinfo}" valueLiveUpdate="true" value="{
+				<Input placeholder="{i18n>PlaceholderEnterSupplierinfo}" value="{
 					path: 'odata>SupplierInfo',
 					type: 'sap.ui.model.type.String',
 					constraints: {
@@ -96,14 +96,14 @@
 
 				<Label text="{i18n>AtributsOrigin}" required="true"/>
 
-				<Input placeholder="{i18n>PlaceholderEnterOrigin}" valueLiveUpdate="true" value="{
+				<Input placeholder="{i18n>PlaceholderEnterOrigin}" value="{
 					path: 'MadeIn',
 					type: 'sap.ui.model.type.String',
 					constraints: {
 						minLength: 2
 					}
 				}" visible="{= !${StoresDeteils>/edit} }"/>
-				<Input placeholder="{i18n>PlaceholderEnterOrigin}" valueLiveUpdate="true" value="{
+				<Input placeholder="{i18n>PlaceholderEnterOrigin}" value="{
 					path: 'odata>MadeIn',
 					type: 'sap.ui.model.type.String',
 					constraints: {
@@ -113,14 +113,14 @@
 
 				<Label text="{i18n>AtributsProdCompanyu}" required="true"/>
 
-				<Input placeholder="{i18n>PlaceholderEnterProdCompany}" valueLiveUpdate="true" value="{
+				<Input placeholder="{i18n>PlaceholderEnterProdCompany}" value="{
 					path: 'ProductionCompanyName',
 					type: 'sap.ui.model.type.String',
 					constraints: {
 						minLength: 2
 					}
 				}" visible="{= !${StoresDeteils>/edit} }"/>
-				<Input placeholder="{i18n>PlaceholderEnterProdCompany}" valueLiveUpdate="true" value="{
+				<Input placeholder="{i18n>PlaceholderEnterProdCompany}" value="{
 					path: 'odata>ProductionCompanyName',
 					type: 'sap.ui.model.type.String',
 					constraints: {

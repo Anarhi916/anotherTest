@@ -94,14 +94,22 @@ sap.ui.define(
             .getText("MessageValidInfo");
           MessageBox.error(sMessage);
         } else {
-          sMessage = this.getView()
-            .getModel("i18n")
-            .getResourceBundle()
-            .getText("MessageSuccessfulCreateStore");
-          var oODataModel = this.getView().getModel("odata");
-          oODataModel.submitChanges();
-          this.onCancelPress();
-          MessageToast.show(sMessage);
+          if (this.isValidEmail()) {
+            sMessage = this.getView()
+              .getModel("i18n")
+              .getResourceBundle()
+              .getText("MessageSuccessfulCreateStore");
+            var oODataModel = this.getView().getModel("odata");
+            oODataModel.submitChanges();
+            this.onCancelPress();
+            MessageToast.show(sMessage);
+          } else {
+            sMessage = this.getView()
+              .getModel("i18n")
+              .getResourceBundle()
+              .getText("MessageValidEmail");
+            MessageBox.error(sMessage);
+          }
         }
       },
 
@@ -115,6 +123,17 @@ sap.ui.define(
               return true;
             }
           }
+        }
+      },
+
+      isValidEmail: function () {
+        let email = this.getView().byId("idInputEmail").getValue();
+        let regExpEmail =
+          /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+        if (!regExpEmail.test(String(email).toLowerCase())) {
+          return false;
+        } else {
+          return true;
         }
       },
     });
