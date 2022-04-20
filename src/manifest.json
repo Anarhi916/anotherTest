@@ -1,0 +1,122 @@
+{
+  "sap.app": {
+    "id": "andrey.filimonov",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "applicationVersion": {
+      "version": "1.0.0"
+    },
+
+    "dataSources": {
+      "mainService": {
+        "uri": "http://localhost:3000/odata",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
+      }
+    }
+  },
+
+  "sap.ui": {
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    },
+    "supportedThemes": ["sap_belize"]
+  },
+  "sap.ui5": {
+    "rootView": "andrey.filimonov.view.App",
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "viewType": "XML",
+        "viewPath": "andrey.filimonov.view",
+        "controlId": "RootApp",
+        "controlAggregation": "pages",
+        "bypassed": {
+          "target": ["notFound"]
+        },
+        "async": true
+      },
+      "routes": [
+        {
+          "pattern": "",
+          "name": "StoresOverview",
+          "target": ["storesOverview"]
+        },
+
+        {
+          "pattern": "StoreDetails/{StoreID}",
+          "name": "StoreDetailsRoute",
+          "target": ["storesDetails"]
+        },
+
+        {
+          "pattern": "StoreDetails/{StoreID}/ProductDetails/{ProductID}",
+          "name": "ProductDetailsRoute",
+          "target": ["productDetails"]
+        }
+      ],
+
+      "targets": {
+        "storesOverview": {
+          "viewName": "StoresOverview",
+          "viewId": "storesOverview",
+          "viewLevel": 1
+        },
+
+        "storesDetails": {
+          "viewName": "StoreDetails",
+          "viewId": "storeDetails",
+          "viewLevel": 2
+        },
+
+        "productDetails": {
+          "viewName": "ProductDetails",
+          "viewId": "productDetails",
+          "viewLevel": 3
+        },
+
+        "notFound": {
+          "viewName": "NotFound",
+          "viewId": "notFound"
+        }
+      }
+    },
+    "dependencies": {
+      "minUI5Version": "1.54.0",
+      "libs": {
+        "sap.m": {}
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "andrey.filimonov.i18n.i18n",
+          "bundleLocale": "ua"
+        }
+      },
+
+      "odata": {
+        "dataSource": "mainService",
+        "settings": {
+          "defaultBindingMode": "TwoWay",
+          "defaultCountMode": "Inline",
+          "useBatch": false
+        }
+      }
+    }
+  }
+}

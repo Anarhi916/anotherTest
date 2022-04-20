@@ -25,14 +25,14 @@ sap.ui.define(
           .getRoute("ProductDetailsRoute")
           .attachPatternMatched(this.onPatternMatched, this);
 
-        var oProductDeteilsModel = new JSONModel({
-          ProductID: "",
-          inputsValue: {
-            Author: "",
-            Rating: "",
-            Message: "",
-          },
-        });
+        // var oProductDeteilsModel = new JSONModel({
+        //   ProductID: "",
+        //   inputsValue: {
+        //     Author: "",
+        //     Rating: "",
+        //     Message: "",
+        //   },
+        // });
         // var oProductDeteilsModel = new JSONModel({
         //   inputsValue: {
         //     Author: "",
@@ -42,9 +42,9 @@ sap.ui.define(
         //     ProductId: "",
         //   },
         // });
-        this.oProductDeteilsModel = oProductDeteilsModel;
+        // this.oProductDeteilsModel = oProductDeteilsModel;
 
-        this.getView().setModel(oProductDeteilsModel, "ProductDeteils");
+        // this.getView().setModel(oProductDeteilsModel, "ProductDeteils");
       },
 
       onPatternMatched: function (oEvent) {
@@ -60,7 +60,6 @@ sap.ui.define(
             path: sKey,
             model: "odata",
           });
-          that.oProductDeteilsModel.setProperty("/ProductId", sProductID);
 
           var oItemsBinding = oCommentsList.getBinding("items");
           var oFilter = new Filter("ProductId", FilterOperator.EQ, sProductID);
@@ -91,41 +90,25 @@ sap.ui.define(
 
       onPostComment: function () {
         var sDate = new Date();
-        // this.oProductDeteilsModel.setProperty(
-        //   "/inputsValue/ProductId",
-        //   sProductID
-        // );
-        // this.oProductDeteilsModel.setProperty("/inputsValue/Posted", sDate);
         var oODataModel = this.getView().getModel("odata");
-        // var oComments = this.oProductDeteilsModel.getProperty("/inputsValue");
-        var Author = this.oProductDeteilsModel.getProperty(
-          "/inputsValue/Author"
-        );
-        var Rating = this.oProductDeteilsModel.getProperty(
-          "/inputsValue/Rating"
-        );
-        var Message = this.oProductDeteilsModel.getProperty(
-          "/inputsValue/Message"
-        );
-        var oComments = {
-          Author: Author,
-          Rating: Rating,
-          Message: Message,
-          Posted: sDate,
-          ProductId: sProductID,
-        };
-        oODataModel.create("/ProductComments", oComments, {
-          success: function () {
-            MessageToast.show("Comment was successfully created!");
-          }.bind(this),
-          error: function () {
-            MessageBox.error("Error while creating comment!");
+        var Author = this.getView().byId("idAuthor").getValue();
+        var Rating = this.getView().byId("idRating").getValue();
+        var Message = this.getView().byId("idMessage").getValue();
+        var oODataModel = this.getView().getModel("odata");
+        var oEntryCtx = oODataModel.createEntry("/ProductComments", {
+          properties: {
+            ProductId: sProductID,
+            Author: Author,
+            Rating: Rating,
+            Message: Message,
+            Posted: sDate,
           },
         });
+        oODataModel.submitChanges(oEntryCtx);
+        oODataModel.deleteCreatedEntry(oEntryCtx);
+        this.getView().byId("idAuthor").setValue("");
+        this.getView().byId("idRating").setValue("");
       },
     });
   }
 );
-
-// items="{ path: 'odata>/ProductComments',
-// 				filters: [{ path: 'ProductId', operator: 'EQ', value1: '220'}]}"

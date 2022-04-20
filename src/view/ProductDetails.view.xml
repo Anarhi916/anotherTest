@@ -1,0 +1,85 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:f="sap.f"
+	xmlns:layout="sap.ui.layout" height="100%" controllerName="andrey.filimonov.controller.ProductDetails">
+	<f:DynamicPage class="sapUiNoContentPadding">
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="{i18n>ShowTitleProductDeteils} ({odata>Name})" />
+				</f:heading>
+				<f:breadcrumbs>
+					<Breadcrumbs>
+						<Link text="{i18n>LinkStoresList}" press="goToStoreOverview"/>
+						<Link text="{i18n>LinkStoresDeteils}" press="goToStoreDeteils"/>
+						<Link text="{i18n>LinkProductDeteils}"/>
+					</Breadcrumbs>
+				</f:breadcrumbs>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:header>
+			<f:DynamicPageHeader >
+				<layout:HorizontalLayout allowWrapping="true">
+					<layout:VerticalLayout class="sapUiMediumMarginEnd">
+						<layout:HorizontalLayout >
+							<Label text="{i18n>AtributsPrice}:" design="Bold" class="sapUiSmallMarginEnd"/>
+							<Text text="{odata>Price}"/>
+						</layout:HorizontalLayout>
+						<layout:HorizontalLayout >
+							<Label text="{i18n>AtributsProdCompanyu}:" design="Bold" class="sapUiSmallMarginEnd"/>
+							<Text text="{odata>ProductionCompanyName}"/>
+						</layout:HorizontalLayout>
+						<layout:HorizontalLayout >
+							<Label text="{i18n>AtributsRating}:" design="Bold" class="sapUiSmallMarginEnd"/>
+							<Text text="{odata>Rating}"/>
+						</layout:HorizontalLayout>
+
+					</layout:VerticalLayout>
+					<layout:VerticalLayout class="sapUiMediumMarginEnd">
+						<layout:HorizontalLayout >
+							<Label text="{i18n>AtributsOrigin}:" design="Bold" class="sapUiSmallMarginEnd"/>
+							<Text text="{odata>MadeIn}"/>
+						</layout:HorizontalLayout>
+						<layout:HorizontalLayout >
+							<Label text="{i18n>AtributsStatus}:" design="Bold" class="sapUiSmallMarginEnd"/>
+							<ObjectStatus text="{odata>Status}" state="{
+								path: 'odata>Status',
+								formatter: '.statusIndicator'
+							}" inverted="true" active="true"/>
+						</layout:HorizontalLayout>
+					</layout:VerticalLayout>
+				</layout:HorizontalLayout>
+				<layout:HorizontalLayout >
+					<Label text="{i18n>AtributsSpecs}:" design="Bold" class="sapUiSmallMarginEnd"/>
+					<Text text="{odata>Specs}" class="sapUiMediumMarginEnd"/>
+				</layout:HorizontalLayout>
+				<layout:HorizontalLayout >
+					<Label text="{i18n>AtributsSupplierinfo}:" design="Bold" class="sapUiSmallMarginEnd"/>
+					<Text text="{odata>SupplierInfo}" class="sapUiMediumMarginEnd"/>
+				</layout:HorizontalLayout>
+
+			</f:DynamicPageHeader>
+		</f:header>
+		<f:content >
+			<VBox>
+				<HBox alignItems="Center" class="sapUiSmallMarginTop sapUiSmallMarginBegin">
+					<Label text="{i18n>LabelAuthor}"/>
+					<Input class="sapUiSmallMarginBegin" placeholder="{i18n>PlaceholderEnterName}" id="idAuthor"/>
+					<Label text="{i18n>AtributsRating}:" class="sapUiMediumMarginBegin"/>
+					<RatingIndicator id="idRating" class="sapUiSmallMarginBegin"/>
+				</HBox>
+				<FeedInput id="idMessage" post="onPostComment" placeholder="{i18n>PlaceholderEnterMessage}" icon="sap-icon://SAP-icons-TNT/user" class="sapUiSmallMarginTopBottom" />
+				<List id="idListComments" showSeparators="Inner" items="{odata>/ProductComments}">
+					<FeedListItem sender="{odata>Author}" icon="sap-icon://SAP-icons-TNT/user" senderPress="onSenderPress" iconPress="onIconPress" iconDensityAware="false" info="{i18n>AtributsRating} {odata>Rating}" timestamp="{
+						path: 'odata>Posted',
+						type: 'sap.ui.model.type.Date',
+						formatOptions: {
+						style: 'medium'
+						}
+			}" text="{odata>Message}" convertLinksToAnchorTags="All"/>
+				</List>
+			</VBox>
+		</f:content>
+
+	</f:DynamicPage>
+</mvc:View>
